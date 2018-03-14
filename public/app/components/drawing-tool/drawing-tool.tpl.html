@@ -1,0 +1,48 @@
+﻿<div class="drawing-tool">
+	<div class="drawing-toolbar">
+		<div class="toggle"
+			 ng-class="{ 'selected': $ctrl.drawingMode === $ctrl.DRAWING_MODES.SELECT_PATH }"
+			 ng-click="$ctrl.onDrawingModeClick($ctrl.DRAWING_MODES.SELECT_PATH);"
+			 title="Select">
+			<i class="fas fa-mouse-pointer"></i>
+		</div>
+
+		<div class="toggle toggle-draw"
+			 ng-class="{ 'selected': $ctrl.drawingMode === $ctrl.DRAWING_MODES.FREE_DRAWING }"
+			 ng-click="$ctrl.onDrawingModeClick($ctrl.DRAWING_MODES.FREE_DRAWING);"
+			 title="Draw">
+			<i class="fas fa-paint-brush"></i>
+		</div>
+
+		<select ng-model="$ctrl.strokeWidth"
+		        ng-change="$ctrl.onStrokeWidthChanged();">
+			<option ng-repeat="option in $ctrl.strokeWidths"
+			        ng-value="option">{{option}}</option>
+		</select>
+		
+		<div class="toggle toggle-delete"
+		     ng-click="$ctrl.onDeleteClick();"
+			 title="Delete">
+			<i class="fas fa-trash-alt"></i>
+		</div>
+	</div>
+
+	<div class="section-drawing">
+		<canvas id="drawing-canvas"></canvas>
+	</div>
+
+	<div class="drawing-colors">
+		<div class="drawing-color"
+			 ng-repeat="color in $ctrl.colors"
+			 ng-style="{ 'background-color': color }"
+			 ng-click="$ctrl.onColorClick(color);"
+			 ng-class="{ 'selected': $ctrl.selectedColor === color }"></div>
+	</div>
+
+	<div class="drawing-toolbar drawing-backgrounds">
+		Background: 
+		<select ng-model="$ctrl.drawingBackground"
+		        ng-options="option.description for option in $ctrl.backgrounds track by option.id"
+		        ng-change="$ctrl.onBackgroundChange();"></select>
+	</div>
+</div>

@@ -1,0 +1,85 @@
+﻿body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+
+select {
+	padding: 2px;
+	font-size: 16px;
+}
+
+.section-drawing .canvas-container {
+	margin: 0 auto;
+}
+
+canvas {
+	border: 1px solid #000;
+}
+
+.drawing-colors {
+	text-align: center;
+	margin: 5px;
+}
+
+.drawing-color {
+	display: inline-block;
+	width: 50px;
+	height: 25px;
+	vertical-align: middle;
+	margin: 3px 0;
+	cursor: pointer;
+}
+
+	.drawing-color:hover {
+		height: 31px;
+		margin: 0;
+	}
+
+	.drawing-color.selected {
+		border-bottom: 3px solid #34a6dd;
+	}
+
+.drawing-toolbar {
+	max-width: 680px;
+	margin: 0 auto;
+	padding: 20px 0;
+}
+
+.toggle {
+	font-size: 14px;
+	color: #5e5e5e;
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #fff;
+	border: 1px solid #cbcccd;
+	border-radius: 15px;
+	cursor: pointer;
+	min-width: 15px;
+	text-align: center;
+	margin-right: 10px;
+}
+
+	.toggle:hover {
+		border-color: #999;
+		color: #000;
+		background-color: #cbcccd;
+	}
+
+	.toggle.selected {
+		color: #fff;
+		border-color: #1b689e;
+		background-color: #34a6dd;
+	}
+
+	.toggle:hover.selected {
+		background-color: #2684c4;
+	}
+
+	.toggle.toggle-draw {
+		margin-right: 5px;
+	}
+
+	.toggle.toggle-delete {
+		float: right;
+		margin: 0;
+	}
