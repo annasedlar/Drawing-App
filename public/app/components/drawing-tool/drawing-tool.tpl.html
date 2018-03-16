@@ -7,6 +7,7 @@
 			<i class="fas fa-mouse-pointer"></i>
 		</div>
 
+		<!-- PAINT BRUSH -->
 		<div class="toggle toggle-draw"
 			 ng-class="{ 'selected': $ctrl.drawingMode === $ctrl.DRAWING_MODES.FREE_DRAWING }"
 			 ng-click="$ctrl.onDrawingModeClick($ctrl.DRAWING_MODES.FREE_DRAWING);"
@@ -18,6 +19,20 @@
 		        ng-change="$ctrl.onStrokeWidthChanged();">
 			<option ng-repeat="option in $ctrl.strokeWidths"
 			        ng-value="option">{{option}}</option>
+		</select>
+
+	<!-- ERASER -->
+		<div class="toggle toggle-draw"
+			ng-class="{ 'selected': $ctrl.drawingMode === $ctrl.DRAWING_MODES.ERASING }"
+			ng-click="$ctrl.onDrawingModeClick($ctrl.DRAWING_MODES.ERASING); $ctrl.setEraser();"
+			title="Erase">
+			<i class="fas fa-eraser"></i>
+ 		</div>
+
+		<select ng-model="$ctrl.eraserWidth"
+						ng-change="$ctrl.onEraserWidthChanged();">
+			<option ng-repeat="option in $ctrl.eraserWidths"
+							ng-value="option">{{option}}</option>
 		</select>
 		
 		<div class="toggle toggle-delete"
