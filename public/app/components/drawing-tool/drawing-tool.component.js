@@ -75,6 +75,22 @@
 
 			// Set options to allow multi-select using the shift or ctrl keys
 			canvas.selectionKey = ['shiftKey', 'ctrlKey'];
+			// console.log(canvas);
+			var coordinatesArray = [];
+			var isDrawing = false;
+			canvas.on('mouse:down', function(options) {
+				isDrawing = true;
+					canvas.on('mouse:move', function(options){
+						if(isDrawing === true){
+							coordinatesArray.push(canvas.getPointer(options.e));
+							console.log(coordinatesArray);
+						}
+					});
+			});
+			canvas.on('mouse:up', function(options){
+				isDrawing = false;
+				console.log('MOUSE UP')
+			});
 		}
 
 		function renderBackground() {
@@ -98,7 +114,7 @@
 			}
 		}
 
-		// Sets the drawing mode to either free drawing or select
+		// Sets the drawing mode to either free drawing, erase, or select
 		function setDrawingMode(val) {
 			ctrl.drawingMode = val;
 
@@ -132,44 +148,17 @@
 		
 		function setEraser() {
 			if (canvas)
-			console.log(canvas);
-			// insert freeDrawing but use:
-			// ctx.globalCompositeOperation = 'destination-out';
-			// canvas.eraserBrush = fabric.PencilBrush && new fabric.PencilBrush(ctrl);
-			var context = canvas.getContext();
-			// console.log(context.globalCompositeOperation);
-			context.globalCompositeOperation = 'destination-out';
-			console.log(context.globalCompositeOperation);
-			canvas.freeDrawingBrush.width = ctrl.eraserWidth;
-			canvas.freeDrawingBrush.color  = 'white';
-			canvas.globalCompositeOperation = 'destination-out';
-			// ctrl._setupCompositeOperation('destination-out');
-				// canvas.eraserBrush.width = ctrl.eraserWidth;
+				console.log(canvas);
+				canvas.freeDrawingBrush.width = ctrl.eraserWidth;
+				canvas.freeDrawingBrush.color  = 'white';
+				canvas.globalCompositeOperation = 'destination-out';
 		};
 
 		function setEraserWidth() {
 			if (canvas)
 				canvas.freeDrawingBrush.width = ctrl.eraserWidth;
 		};
-		
-	// 	canvas.onmouseover = function(e) {
-	// 		if (!canvas.isDrawing) {
-	// 			 return;
-	// 		}
-	// 		var x = e.pageX - this.offsetLeft;
-	// 		var y = e.pageY - this.offsetTop;
-	// 		var radius = 10; // or whatever
-	// 		var fillColor = '#fafafa';
-	// 		ctx.globalCompositeOperation = 'destination-out';
-	// 		ctx.fillCircle(x, y, radius, fillColor);
-	// };
-	// canvas.node.onmousedown = function(e) {
-	// 		canvas.isDrawing = true;
-	// };
-	// canvas.node.onmouseup = function(e) {
-	// 		canvas.isDrawing = false;
-	// };
-		
+
 		/******************************
 		 *       Event Handlers       *
 		 ******************************/
@@ -180,6 +169,8 @@
 		};
 
 		ctrl.onDrawingModeClick = function(drawingMode) {
+			setSelectedColor('black');
+			setStrokeWidth(ctrl.strokeWidth);
 			setDrawingMode(drawingMode);
 		};
 
