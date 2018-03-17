@@ -27,6 +27,9 @@
 
 		ctrl.eraserWidths = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 		ctrl.eraserWidth = 1;
+		ctrl.coordinatesArray = [];
+		ctrl.isErasingMode = false;
+		ctrl.isCurrentlyErasing = false;
 
 		ctrl.colors = ['#000000', '#1f75fe', '#b4674d', '#1cac78', '#666', '#ff7538', '#ee204d', '#ff5349', '#80daeb', '#926eae', '#fce883', '#c5e384'];
 		ctrl.selectedColor = undefined;
@@ -75,21 +78,22 @@
 
 			// Set options to allow multi-select using the shift or ctrl keys
 			canvas.selectionKey = ['shiftKey', 'ctrlKey'];
-			// console.log(canvas);
-			var coordinatesArray = [];
-			var isDrawing = false;
+
 			canvas.on('mouse:down', function(options) {
-				isDrawing = true;
+				if(canvas.isErasingMode){
+					ctrl.isCurrentlyErasing = true; 
 					canvas.on('mouse:move', function(options){
-						if(isDrawing === true){
-							coordinatesArray.push(canvas.getPointer(options.e));
-							console.log(coordinatesArray);
+						if(ctrl.isCurrentlyErasing === true){
+							ctrl.coordinatesArray.push(canvas.getPointer(options.e));
 						}
 					});
+				}
 			});
 			canvas.on('mouse:up', function(options){
-				isDrawing = false;
+				ctrl.isCurrentlyErasing = false;
 				console.log('MOUSE UP')
+				console.log('New Erasing Coordinates:');
+				console.log(ctrl.coordinatesArray);
 			});
 		}
 
@@ -124,9 +128,11 @@
 			switch (val) {
 				case DRAWING_MODES.FREE_DRAWING:
 					canvas.isDrawingMode = true;
+					canvas.isErasingMode = false;
 					break;
 				case DRAWING_MODES.SELECT_PATH:
 					canvas.isDrawingMode = false;
+					canvas.isErasingMode = false;
 					break;
 				case DRAWING_MODES.ERASING:
 					canvas.isDrawingMode = true;
@@ -148,7 +154,7 @@
 		
 		function setEraser() {
 			if (canvas)
-				console.log(canvas);
+				canvas.isErasingMode = true;
 				canvas.freeDrawingBrush.width = ctrl.eraserWidth;
 				canvas.freeDrawingBrush.color  = 'white';
 				canvas.globalCompositeOperation = 'destination-out';
